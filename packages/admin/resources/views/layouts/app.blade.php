@@ -9,14 +9,20 @@
 
     <title>{{ $title ?? 'Hub' }} | {{ config('app.name') }}</title>
 
-    <link rel="icon"
-          type="image/png"
-          href="https://cdn.getcandy.io/hub/favicon.svg">
+    <x-hub::branding.favicon />
 
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;500;700;900&display=swap"
           rel="stylesheet">
     <link href="{{ asset('vendor/getcandy/admin-hub/app.css?v=1') }}"
           rel="stylesheet">
+
+    @if ($styles = \GetCandy\Hub\GetCandyHub::styles())
+        <!-- Package Styles -->
+        @foreach ($styles as $asset)
+            <link href="{!! $asset->url() !!}" rel="stylesheet">
+        @endforeach
+    @endif
+
 
     <style>
         .filepond--credits {
@@ -84,6 +90,13 @@
 
     @livewireScripts
 
+    @if ($scripts = \GetCandy\Hub\GetCandyHub::scripts())
+        <!-- Package Scripts -->
+        @foreach ($scripts as $asset)
+            <script src="{!! $asset->url() !!}"></script>
+        @endforeach
+    @endif
+    
     <script src="{{ asset('vendor/getcandy/admin-hub/app.js') }}"></script>
 </body>
 
